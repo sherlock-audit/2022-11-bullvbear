@@ -1,4 +1,4 @@
-# BullvBear contest details
+# Bull v Bear contest details
 
 - 10,000 USDC main award pot
 - Join [Sherlock Discord](https://discord.gg/MABEWyASkp)
@@ -26,6 +26,6 @@ ERC721: [e.g. any, none, UNI-V3]
 
 TBD
 
-# About BullvBear
+# About Bull v Bear
 
 TBD
