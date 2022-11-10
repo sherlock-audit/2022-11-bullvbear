@@ -711,7 +711,7 @@ contract BvbProtocol is EIP712("BullvBear", "1"), Ownable, ReentrancyGuard, ERC7
     /*    HELPERS METHODS    */
 
     /**
-     * @notice Sets the collection as supported or not by the protocol
+     * @notice Checks if a buyer is whitelisted
      * @param whitelist The array of whitelisted address
      * @param buyer The buyer address
      * @return If the buyer is in the whitelist or not
