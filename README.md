@@ -82,9 +82,9 @@ The Bull will deposit a collateral, to guarantee the buy, and the Bear will depo
 
 The Bear will then be able to sell any NFT from a specific collection to the Bull before the expiration of the option.
 
-If the Bear doesn't sell a NFT before the expiration, the Bull will be able to withdraw the collateral he brought for this option and also the premium deposited by the Bear.
+If the Bear doesn’t send an NFT before expiration, the Bull will be able to withdraw the collateral he deposited and also the premium deposited by the Bear.
 
-Otherwise, if the Bear chose to sell a NFT to the Bull, the Bull will receive the NFT, and the Bear will receive his premium deposit and the collateral deposited by the Bull.
+Otherwise, if the Bear decides to sell a NFT to the Bull, he will get his premium deposit back, plus the collateral deposited by the Bull. In that case, the NFT will be taken from the Bear and sent to the Bull.
 
 ## User Methods
 
