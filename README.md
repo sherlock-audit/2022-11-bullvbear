@@ -14,15 +14,15 @@
 - [Website](https://bullvbear.xyz/)
 - [Twitter](https://twitter.com/BullvBearNFT)
 - [Discord](https://discord.gg/tfMzWkcP9R)
-
+- [Gitbook](https://bull-v-bear.gitbook.io/) (check in particular the [“Understanding the protocol” section](https://bullvbear.gitbook.io/home/understanding-the-protocol/the-mechanism) as well as the [functional specs for the smart contracts](https://bullvbear.gitbook.io/home/understanding-the-protocol/smart-contracts))
 ---
 
 # About BullvBear
 
 BullvBear is a peer-to-peer marketplace enabling traders to buy and sell NFTs in the future.
-- People bullish on a collection will take a buy order (bull) and will pay the settlement price (bull price) to get
+- People bullish on a collection will take a buy order (bull) and will pay the settlement price (bull price/collateral) to get
 any NFT from the collection before the settlement deadline. They will usually pay a price discounted to the current floor price, therefore will get a discounted NFT
-- People bearish on a collection will pay a security deposit (bear price) to be able to sell any NFT from the collection at the predetermined settlement price (bull price) to a buyer. If the collection floor price goes down they will cash out a profit (shorting). If they don’t send the NFT, they lose their security deposit that is sent to the buyer (bull)
+- People bearish on a collection will pay a security deposit (bear price/premium) to be able to sell any NFT from the collection at the predetermined settlement price (bull price/collateral) to a buyer. If the collection floor price goes down they will cash out a profit (shorting). If they don’t send the NFT, they lose their security deposit that is sent to the buyer (bull)
 
 ---
 
@@ -82,9 +82,15 @@ The Bull will deposit a collateral, to guarantee the buy, and the Bear will depo
 
 The Bear will then be able to sell any NFT from a specific collection to the Bull before the expiration of the option.
 
-If the Bear doesn’t send an NFT before expiration, the Bull will be able to withdraw the collateral he deposited and also the premium deposited by the Bear.
+If the Bear doesn't settle the contract by sending an NFT before the expiration, the Bull will be able to withdraw the collateral he deposited, as well as the premium deposited by the Bear.
 
-Otherwise, if the Bear decides to sell a NFT to the Bull, he will get his premium deposit back, plus the collateral deposited by the Bull. In that case, the NFT will be taken from the Bear and sent to the Bull.
+Otherwise, if the Bear decides to sell a NFT to the Bull, the Bull will receive the NFT, and the Bear will receive the premium he deposited and the collateral deposited by the Bull. In that case, the NFT will be taken from the Bear and sent to the Bull.
+
+# Functional specs
+
+Check the [Gitbook](https://bullvbear.gitbook.io/home/understanding-the-protocol/smart-contracts)
+
+# Technical specs
 
 ## User Methods
 
@@ -92,13 +98,13 @@ Otherwise, if the Bear decides to sell a NFT to the Bull, he will get his premiu
 
 `matchOrder(Order calldata order, bytes calldata signature)`
 
-Anybody can create an Order offchain (with signature), if he is willing to take a Bull or Bear position on specific parameters served by our website. He would be the Maker of this Order.
+Anybody can create an Order offchain (with signature) to take a Bull or a Bear position with a specific set of parameters displayed on our website. He would be the Maker of this Order.
 
 Then anybody that submits this Order to BvbProtocol, through this method, would be the Taker of this Order.
 
 This Order could be matched only if several requirements are met, like Maker and Taker having enough liquidity to pay for their due, but also having approved BvbProtocol to move their funds on their behalf.
 
-After an Order have been matched, it will be considered as a Contract by BvbProtocol.
+After an Order has been matched, it will be considered as a Contract by BvbProtocol.
 
 All funds will be held by BvbProtocol, which will be the amount paid by the Bull (`order.collateral` + fees) and the Bear (`order.premium` + fees).
 
@@ -106,7 +112,7 @@ All funds will be held by BvbProtocol, which will be the amount paid by the Bull
 
 `settleContract(Order calldata order, uint tokenId)`
 
-Only available for User who is Bear in the Contract (= matched Order), before the Contract expiration (`order.expiry`)
+This method is only available to an User who is Bear in the Contract (= matched Order), before the Contract expiration (`order.expiry`)
 
 When calling this method, BvbProtocol will retrieve the token specified by the Bear and send it to the Bull. It will also send `order.premium` and `order.collateral` to the Bear.
 
@@ -134,13 +140,13 @@ A token should be withdrawable only if it wasn't possible to send it directly to
 
 `buyPosition(SellOrder calldata sellOrder, bytes calldata signature)`
 
-Anybody can create SellOrder offchain (with signature), if he is willing to sell a position he owns on a Contract. He would be the Maker of this SellOrder.
+Anybody can create a SellOrder offchain (with signature) to sell a position he owns on a Contract. He would be the Maker of this SellOrder.
 
 Then anybody that submits this SellOrder to BvbProtocol, through this method, would be the Taker of this SellOrder.
 
 This SellOrder could be bought only if several requirements are met, like Taker having enough liquidity to pay, but also having approved BvbProtocol to move their funds on their behalf (if not directly paid in ETH).
 
-After a SellOrder have been bought, the position of the Maker will be transfered to the Taker.
+After a SellOrder has been bought, the position of the Maker will be transfered to the Taker.
 
 `sellOrder.price` will be sent from the Taker to the Maker, and potentially a bit more if the Taker if willing to pay more directly (through ETH).
 
@@ -265,6 +271,8 @@ Metrics can be found [here](bvb-protocol/solidity-metrics.html)
 ---
 
 # Team & Contacts
+
+We’ll all be in the Discord with DMs open if you have any questions. Please reach out!
 
 - Pierre (Blockchain Dev) :
     - GitHub : [@datschill](https://github.com/datschill)
