@@ -32,9 +32,11 @@ any NFT from the collection before the settlement deadline. They will usually pa
 DEPLOYMENT: mainnet
 ERC20: any
 ERC721: any
+ADMIN: trusted
 ```
-
 Any ERC721 collection and ERC20 tokens can be used on BullvBear, but these would have to be allowed first by the team.
+
+The admin should not be able to access user funds, only take the fees.
 
 ---
 
